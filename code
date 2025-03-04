@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int data;
+    struct Node* next;
+} Node;
+
+void reverse(Node** head) {
+    Node *prev = NULL, *current = *head, *next = NULL;
+    while (current) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    *head = prev;
+}
+
+void push(Node** head, int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+void printList(Node* head) {
+    while (head) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    Node* head = NULL;
+    push(&head, 1);
+    push(&head, 2);
+    push(&head, 3);
+    
+    printf("Original List: ");
+    printList(head);
+    
+    reverse(&head);
+    
+    printf("Reversed List: ");
+    printList(head);
+    
+    return 0;
+}
